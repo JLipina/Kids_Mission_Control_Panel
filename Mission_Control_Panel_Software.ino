@@ -323,7 +323,7 @@ void loop() {
 
   if(!mcp1.digitalRead(O2_FAN_SW) && O2_FAN_Played == FALSE){
     mcp1.digitalWrite(O2_FAN_LED, HIGH);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("fuel_o2_fan.mp3");
     O2_FAN_Played = TRUE;
     Serial.println(F("O2 FAN ON"));
   } 
@@ -335,7 +335,7 @@ void loop() {
 
     if(!mcp1.digitalRead(C2_FAN_SW) && C2_FAN_Played == FALSE){
     mcp1.digitalWrite(C2_FAN_LED, HIGH);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("fuel_c2_fan.mp3");
     C2_FAN_Played = TRUE;
     Serial.println(F("C2 FAN ON"));
   } 
@@ -347,7 +347,7 @@ void loop() {
 
     if(!mcp1.digitalRead(PUMPS_SW) && PUMPS_Played == FALSE){
     mcp1.digitalWrite(PUMPS_LED, HIGH);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("fuel_pump.mp3");
     PUMPS_Played = TRUE;
     Serial.println(F("PUMPS ON"));
   } 
@@ -359,7 +359,7 @@ void loop() {
 
   if(!mcp1.digitalRead(HEAT_SW) && HEAT_Played == FALSE){
     mcp1.digitalWrite(HEAT_LED, HIGH);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("fuel_heat.mp3");
     HEAT_Played = TRUE;
     Serial.println(F("HEAT ON"));
   } 
@@ -389,7 +389,7 @@ void loop() {
 
   if(!mcp2.digitalRead(MASTER_ALARM_SW) && MASTER_ALARM_Played == FALSE){
     mcp2.digitalWrite(MASTER_ALARM_LED, HIGH);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("event_seq_master_alarm.mp3");
     MASTER_ALARM_Played = TRUE;
     Serial.println(F("MASTER ALARM PRESSED"));
   } 
@@ -402,7 +402,7 @@ void loop() {
 
   if(!mcp3.digitalRead(BOOSTER_LOW_PITCH_SW) && BOOSTER_LOW_PITCH_Played == FALSE){
     mcp3.digitalWrite(BOOSTER_LOW_PITCH_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_pitch_low.mp3");
     BOOSTER_LOW_PITCH_Played = TRUE;
     Serial.println(F("BOOSTER LOW PITCH TOGGLED"));
   } 
@@ -413,7 +413,7 @@ void loop() {
 
   if(!mcp3.digitalRead(BOOSTER_LOW_YAW_SW) && BOOSTER_LOW_YAW_Played == FALSE){
     mcp3.digitalWrite(BOOSTER_LOW_YAW_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_yaw_low.mp3");
     BOOSTER_LOW_YAW_Played = TRUE;
     Serial.println(F("BOOSTER LOW YAW TOGGLED"));
   } 
@@ -424,7 +424,7 @@ void loop() {
 
   if(!mcp3.digitalRead(BOOSTER_LOW_ROLL_SW) && BOOSTER_LOW_ROLL_Played == FALSE){
     mcp3.digitalWrite(BOOSTER_LOW_ROLL_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_roll_low.mp3");
     BOOSTER_LOW_ROLL_Played = TRUE;
     Serial.println(F("BOOSTER LOW ROLL TOGGLED"));
   } 
@@ -437,7 +437,7 @@ void loop() {
 
   if(!mcp3.digitalRead(BOOSTER_MED_PITCH_SW) && BOOSTER_MED_PITCH_Played == FALSE){
     mcp3.digitalWrite(BOOSTER_MED_PITCH_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_pitch_med.mp3");
     BOOSTER_MED_PITCH_Played = TRUE;
     Serial.println(F("BOOSTER MED PITCH TOGGLED"));
   } 
@@ -448,7 +448,7 @@ void loop() {
 
   if(!mcp2.digitalRead(BOOSTER_MED_YAW_SW) && BOOSTER_MED_YAW_Played == FALSE){
     mcp2.digitalWrite(BOOSTER_MED_YAW_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_yaw_med.mp3");
     BOOSTER_MED_YAW_Played = TRUE;
     Serial.println(F("BOOSTER MED YAW TOGGLED"));
   } 
@@ -459,7 +459,7 @@ void loop() {
 
   if(!mcp2.digitalRead(BOOSTER_MED_ROLL_SW) && BOOSTER_MED_ROLL_Played == FALSE){
     mcp2.digitalWrite(BOOSTER_MED_ROLL_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_roll_med.mp3");
     BOOSTER_MED_ROLL_Played = TRUE;
     Serial.println(F("BOOSTER MED ROLL TOGGLED"));
   } 
@@ -472,7 +472,7 @@ void loop() {
 
   if(!mcp2.digitalRead(BOOSTER_HIGH_PITCH_SW) && BOOSTER_HIGH_PITCH_Played == FALSE){
     mcp2.digitalWrite(BOOSTER_HIGH_PITCH_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_pitch_high.mp3");
     BOOSTER_HIGH_PITCH_Played = TRUE;
     Serial.println(F("BOOSTER HIGH PITCH TOGGLED"));
   } 
@@ -483,7 +483,7 @@ void loop() {
 
   if(!mcp2.digitalRead(BOOSTER_HIGH_YAW_SW) && BOOSTER_HIGH_YAW_Played == FALSE){
     mcp2.digitalWrite(BOOSTER_HIGH_YAW_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_yaw_high.mp3");
     BOOSTER_HIGH_YAW_Played = TRUE;
     Serial.println(F("BOOSTER HIGH YAW TOGGLED"));
   } 
@@ -494,7 +494,7 @@ void loop() {
 
   if(!mcp2.digitalRead(BOOSTER_HIGH_ROLL_SW) && BOOSTER_HIGH_ROLL_Played == FALSE){
     mcp2.digitalWrite(BOOSTER_HIGH_ROLL_LED, LOW);
-    MP3player.playMP3("laser001.mp3");
+    MP3player.playMP3("booster_roll_high.mp3");
     BOOSTER_HIGH_ROLL_Played = TRUE;
     Serial.println(F("BOOSTER HIGH ROLL TOGGLED"));
   } 
