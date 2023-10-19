@@ -1,21 +1,5 @@
-/**
- * \file demo.ino
- *
- * \brief Example sketch of using the VS1053 Arduino driver, demonstrating all methods and functions.
- * \remarks comments are implemented with Doxygen Markdown format
- *
- * \author Bill Porter
- * \author Michael P. Flaga
- *
- * This sketch listens for commands from a serial terminal (like the Serial
- * Monitor in the Arduino IDE). If it sees 1-9 it will try to play an MP3 file
- * named track00x.mp3 where x is a number from 1 to 9. For eaxmple, pressing
- * 2 will play 'track002.mp3'. A lowe case 's' will stop playing the mp3.
- * 'f' will play an MP3 by calling it by it's filename as opposed to a track
- * number.
- *
- * Sketch assumes you have MP3 files with filenames like "track001.mp3",
- * "track002.mp3", etc on an SD card loaded into the shield.
+/*
+ * 
  */
 
 #include <SPI.h>
@@ -166,6 +150,16 @@ bool changePosition =           FALSE;
 
 unsigned long startMillis;
 unsigned long currentMillis;
+unsigned long timerMillis;
+uint8_t numTensMilliseconds = 0;
+uint8_t numSingleSeconds = 0;
+uint8_t numTensSeconds = 0;
+uint8_t numSingleMinutes = 0;
+uint8_t numTensMinutes = 0;
+uint8_t numSingleHours = 0;
+uint8_t numTensHours = 0;
+char digit[10] = "0123456789";
+char time[12] = "00:0000:00";
 
 //------------------------------------------------------------------------------
 /**
@@ -215,7 +209,9 @@ void setup() {
 
   Wire.begin(); //Display joins I2C bus
   display.begin(0x71, 0x70);
-  display.print("DYNETICS");
+  //display.print("DYNETICS");
+  display.colonOn();
+  display.print(time);
 
   mcp1.begin_I2C(0X20);
   mcp2.begin_I2C(0X21);
@@ -335,23 +331,12 @@ void setup() {
 
   startMillis = millis();
   launchLedBlinkStart = millis();
+  timerMillis = millis();
 
 }
 
 //------------------------------------------------------------------------------
-/**
- * \brief Main Loop the Arduino Chip
- *
- * This is called at the end of Arduino kernel's main loop before recycling.
- * And is where the user's serial input of bytes are read and analyzed by
- * parsed_menu.
- *
- * Additionally, if the means of refilling is not interrupt based then the
- * MP3player object is serviced with the availaible function.
- *
- * \note Actual examples of the libraries public functions are implemented in
- * the parse_menu() function.
- */
+
 void loop() {
 
 // FUEL SWITCHES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
@@ -402,6 +387,7 @@ void loop() {
   BOOSTER_HIGH_ROLL_Played = checkSwitchMCP2NormallyOnLED(BOOSTER_HIGH_ROLL_SW, BOOSTER_HIGH_ROLL_LED, BOOSTER_HIGH_ROLL_Played, "bost_r_h.mp3");
 
 // FLIGHT PATH LEDS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
   currentMillis = millis();
   if(currentMillis - startMillis >= PATH_SPEED){
@@ -475,7 +461,60 @@ void loop() {
       changePosition = FALSE;
     }
   }
+  
+// Mission Control Timer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  if(currentMillis - timerMillis >= 100){
+    numTensMilliseconds ++;
+    if(numTensMilliseconds >= 10){
+      numTensMilliseconds = 0;
+      numSingleSeconds ++;
+      if(numSingleSeconds >= 10){
+        numSingleSeconds = 0;
+        numTensSeconds ++;
+        if(numTensSeconds >= 7){
+          numTensSeconds = 0;
+          numSingleMinutes ++;
+          if(numSingleMinutes >= 10){
+            numSingleMinutes = 0;
+            numTensMinutes ++;
+            if(numTensMinutes >= 7){
+              numTensMinutes = 0;
+              numSingleHours ++;
+              if(numSingleHours >= 10){
+                numSingleHours = 0;
+                numTensHours ++;
+                if(numTensHours >= 10){
+                  numTensHours = 0;
+                }
+                //display.printChar(digit[numTensHours], 0);
+                time[0] = digit[numTensHours];
+              }
+              //display.printChar(digit[numSingleHours], 1);
+              time[1] = digit[numSingleHours];
+            }
+            //display.printChar(digit[numTensMinutes], 2);
+            time[3] = digit[numTensMinutes];
+          }
+          //display.printChar(digit[numSingleMinutes], 3);
+          time[4] = digit[numSingleMinutes];
+        }
+        //display.printChar(digit[numTensSeconds], 4);
+        time[5] = digit[numTensSeconds];
+      }
+      //display.printChar(digit[numSingleSeconds], 5);
+      time[6] = digit[numSingleSeconds];
+      //display.print(time);
+    }
+    timerMillis = millis();
+    //display.printChar(digit[numTensMilliseconds], 6);
+    time[8] = digit[numTensMilliseconds];
+    display.print(time);
+  }
+
 }
+
+// Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 bool checkSwitchMCP1NormallyOffLED(int switchName, int LEDName, bool playedState, char* audioFileName) {
   if(!mcp1.digitalRead(switchName) && playedState == FALSE){
